@@ -2,10 +2,14 @@ import { Injectable } from '@angular/core';
 import { FaceSnap } from '../models/face-snap';
 import { SnapType } from '../models/snap-type.type';
 
+// The FaceSnapsService class is an Angular service that provides the FaceSnap objects to the components of the application.
+
+// The decorator @Injectable() allows Angular to inject the FaceSnapsService class into other classes.
 @Injectable({
   providedIn: 'root',
 })
 export class FaceSnapsService {
+  // hard-coded array of FaceSnap objects
   private faceSnaps: FaceSnap[] = [
     new FaceSnap(
       'Archibald',
@@ -32,7 +36,7 @@ export class FaceSnapsService {
     ),
   ];
 
-  // method to get the face snaps from the service class and return a copy of the faceSnaps array using the spread operator (...)
+  // method to get the face snaps from the service class and return a shallow copy of the faceSnaps array using the spread operator (...)
   getFaceSnaps(): FaceSnap[] {
     return [...this.faceSnaps]; // shallow copy
   }

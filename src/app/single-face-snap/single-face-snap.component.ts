@@ -15,21 +15,15 @@ export class SingleFaceSnapComponent implements OnInit {
   faceSnap!: FaceSnap;
   snapButtonText!: string;
   userHasSnapped!: boolean;
-  // myLargeNumber: number = 123456.76;
-  // myPercentage: number = 0.3367;
-  // myPrice: number = 336.75;
 
+  // constructor injects dependency FaceSnapsService and ActivatedRoute
   constructor(
     private FaceSnapsService: FaceSnapsService,
     private route: ActivatedRoute
   ) {}
 
+  // ngOnInit method is called when the component is initialized
   ngOnInit(): void {
-    // this.snapButtonText = 'Oh Snap!';
-    // this.userHasSnapped = false;
-    // const faceSnapId = this.route.snapshot.params['id'];
-    // this.faceSnap = this.FaceSnapsService.getFaceSnapById(faceSnapId);
-
     this.prepareInterface();
     this.getFaceSnap();
   }

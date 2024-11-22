@@ -5,6 +5,7 @@ export class FaceSnap {
   location?: string;
   id: string;
 
+  // shorthand to define the properties of the class in the constructor
   constructor(
     public title: string,
     public description: string,
@@ -42,7 +43,7 @@ export class FaceSnap {
   }
 }
 
-// Another way to write the FaceSnap class is to use the constructor shorthand:
+// Another way to write the FaceSnap class using a constructor with parameters:
 // export class FaceSnap {
 //     title: string;
 //     description: string;
