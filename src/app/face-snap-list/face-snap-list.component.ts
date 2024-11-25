@@ -3,11 +3,12 @@ import { FaceSnap } from '../models/face-snap';
 import { FaceSnapComponent } from '../face-snap/face-snap.component';
 import { FaceSnapsService } from '../services/face-snaps.service';
 import { interval, Subject, take, takeUntil, tap } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-face-snap-list',
   standalone: true,
-  imports: [FaceSnapComponent],
+  imports: [FaceSnapComponent, FormsModule],
   templateUrl: './face-snap-list.component.html',
   styleUrl: './face-snap-list.component.scss',
 })
