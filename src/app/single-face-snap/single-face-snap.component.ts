@@ -51,7 +51,7 @@ export class SingleFaceSnapComponent implements OnInit {
   }
 
   private getFaceSnap() {
-    const faceSnapId = this.route.snapshot.params['id'];
+    const faceSnapId = Number(this.route.snapshot.params['id']);
     this.faceSnap = this.FaceSnapsService.getFaceSnapById(faceSnapId);
   }
 

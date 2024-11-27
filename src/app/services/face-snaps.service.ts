@@ -12,7 +12,8 @@ export class FaceSnapsService {
   // hard-coded array of FaceSnap objects
   private faceSnaps: FaceSnap[] = [
     new FaceSnap(
-      'Archibald',
+      1,
+      'Archibalde',
       'Mon meilleur ami depuis toujours !',
       'https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png',
       new Date(),
@@ -20,6 +21,7 @@ export class FaceSnapsService {
     ),
 
     new FaceSnap(
+      2,
       'Barnabé',
       'Un bon gars !',
       'https://cdn.pixabay.com/photo/2017/01/31/21/23/avatar-2027366_960_720.png',
@@ -28,6 +30,7 @@ export class FaceSnapsService {
     ).withLocation('à Paris'),
 
     new FaceSnap(
+      3,
       'Cunégonde',
       'Sans commentaire...',
       'https://cdn.pixabay.com/photo/2018/08/28/12/41/avatar-3637425_960_720.png',
@@ -41,7 +44,7 @@ export class FaceSnapsService {
     return [...this.faceSnaps]; // shallow copy
   }
 
-  getFaceSnapById(faceSnapId: string): FaceSnap {
+  getFaceSnapById(faceSnapId: number): FaceSnap {
     const foundFaceSnap: FaceSnap | undefined = this.faceSnaps.find(
       (faceSnap: FaceSnap) => faceSnap.id === faceSnapId
     );
@@ -51,8 +54,43 @@ export class FaceSnapsService {
     return foundFaceSnap;
   }
 
-  snapFaceSnapById(faceSnapId: string, snapType: SnapType): void {
+  snapFaceSnapById(faceSnapId: number, snapType: SnapType): void {
     const faceSnap: FaceSnap = this.getFaceSnapById(faceSnapId);
     faceSnap.snap(snapType);
+  }
+
+  // addFaceSnap(formValue: {
+  //   title: string;
+  //   description: string;
+  //   imageUrl: string;
+  //   location?: string;
+  // }): void {
+  //   const faceSnap: FaceSnap = {
+  //     ...formValue,
+  //     snaps: 0,
+  //     createdAt: new Date(),
+  //     id: this.faceSnaps[this.faceSnaps.length - 1].id + 1,
+  //   };
+  //   this.faceSnaps.push(faceSnap);
+  // }
+
+  addFaceSnap(formValue: {
+    title: string;
+    description: string;
+    imageUrl: string;
+    location?: string;
+  }): void {
+    const faceSnap: FaceSnap = new FaceSnap(
+      this.faceSnaps[this.faceSnaps.length - 1].id + 1,
+      formValue.title,
+      formValue.description,
+      formValue.imageUrl,
+      new Date(),
+      0
+    );
+    if (formValue.location) {
+      faceSnap.setLocation(formValue.location);
+    }
+    this.faceSnaps.push(faceSnap);
   }
 }
