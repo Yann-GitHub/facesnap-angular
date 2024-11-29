@@ -11,7 +11,7 @@ export class FaceSnap {
     public title: string,
     public description: string,
     public imageUrl: string,
-    public createdAt: Date,
+    public createdDate: Date,
     public snaps: number
   ) {
     // this.id = crypto.randomUUID().substring(0, 8); // generate a random id

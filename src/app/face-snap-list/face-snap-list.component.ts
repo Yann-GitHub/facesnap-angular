@@ -2,25 +2,30 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FaceSnap } from '../models/face-snap';
 import { FaceSnapComponent } from '../face-snap/face-snap.component';
 import { FaceSnapsService } from '../services/face-snaps.service';
-import { interval, Subject, take, takeUntil, tap } from 'rxjs';
+import { interval, Observable, Subject, take, takeUntil, tap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { AsyncPipe, CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-face-snap-list',
   standalone: true,
-  imports: [FaceSnapComponent, FormsModule],
+  imports: [FaceSnapComponent, FormsModule, AsyncPipe, CommonModule],
   templateUrl: './face-snap-list.component.html',
   styleUrl: './face-snap-list.component.scss',
 })
 export class FaceSnapListComponent implements OnInit, OnDestroy {
-  faceSnaps!: FaceSnap[];
+  // faceSnaps!: FaceSnap[];
+  faceSnaps$!: Observable<FaceSnap[]>; // Observable is a class that represents a stream of values over time
+
   private destroy$!: Subject<boolean>;
 
   // Le constructeur injecte le service FaceSnapsService
   constructor(private faceSnapsService: FaceSnapsService) {}
 
   ngOnInit(): void {
-    this.faceSnaps = this.faceSnapsService.getFaceSnaps();
+    // this.faceSnaps = this.faceSnapsService.getFaceSnaps(); // Static data
+    this.faceSnaps$ = this.faceSnapsService.getFaceSnaps();
+
     this.destroy$ = new Subject<boolean>();
 
     // test Observable memory leak - create multiple instances of the observable

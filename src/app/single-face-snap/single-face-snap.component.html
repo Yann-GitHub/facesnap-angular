@@ -1,4 +1,8 @@
-<div class="face-snap-card" [ngClass]="{ snapped: userHasSnapped }">
+<div
+  class="face-snap-card"
+  *ngIf="faceSnap$ | async as faceSnap"
+  [ngClass]="{ snapped: userHasSnapped }"
+>
   <h2>{{ faceSnap.title | uppercase }}</h2>
   <a routerLink="/facesnaps">Back</a>
   <!-- <p>{{ myLargeNumber | number : "1.0-0" }}</p> -->
@@ -15,7 +19,7 @@
   <p>{{ faceSnap.description }}</p>
   <p>
     FaceSnap créée le
-    {{ faceSnap.createdAt | date : "d MMMM yyyy, à HH:mm" }}
+    {{ faceSnap.createdDate | date : "d MMMM yyyy, à HH:mm" }}
   </p>
 
   <p>

@@ -1,27 +1,53 @@
 # Snapface
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12. It a simple photo sharing application that allows users to upload and share. The application is built using Angular for the frontend and the backend is built using json-server.
 
-## Development server
+## FRONTEND
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Running the frontend
 
-## Code scaffolding
+1.  Clone the frontend repository:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+    ```bash
+    git clone https://github.com/Yann-GitHub/facesnap-angular.git
+    ```
 
-## Build
+2.  Install the dependencies:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+    ```bash
+    npm install
+    ```
 
-## Running unit tests
+3.  Run the server:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+    ```bash
+    ng serve
+    ```
 
-## Running end-to-end tests
+4.  Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## BACKEND
 
-## Further help
+This project requires a backend to function correctly. Clone the backend repository from [here](https://github.com/OpenClassrooms-Student-Center/angular-intermediate-backend).
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Running the backend
+
+1.  Clone the backend repository:
+
+    ```bash
+    git clone https://github.com/OpenClassrooms-Student-Center/angular-intermediate-backend.git
+    ```
+
+2.  Install the dependencies:
+
+    ```bash
+    npm install
+    ```
+
+3.  Run the server:
+
+    ```bash
+    npm start
+    ```
+
+4.  Navigate to `http://localhost:3000/`. The server will automatically reload if you change any of the source files.

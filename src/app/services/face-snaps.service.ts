@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FaceSnap } from '../models/face-snap';
 import { SnapType } from '../models/snap-type.type';
+import { HttpClient } from '@angular/common/http'; // HttpClient is a service that allows Angular to make HTTP requests to a server
+import { Observable } from 'rxjs';
 
 // The FaceSnapsService class is an Angular service that provides the FaceSnap objects to the components of the application.
 
@@ -9,54 +11,68 @@ import { SnapType } from '../models/snap-type.type';
   providedIn: 'root',
 })
 export class FaceSnapsService {
+  constructor(private http: HttpClient) {} // inject the HttpClient service into the FaceSnapsService class
+
+  private faceSnaps: FaceSnap[] = [];
+
   // hard-coded array of FaceSnap objects
-  private faceSnaps: FaceSnap[] = [
-    new FaceSnap(
-      1,
-      'Archibalde',
-      'Mon meilleur ami depuis toujours !',
-      'https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png',
-      new Date(),
-      10
-    ),
+  // private faceSnaps: FaceSnap[] = [
+  //   new FaceSnap(
+  //     1,
+  //     'Archibalde',
+  //     'Mon meilleur ami depuis toujours !',
+  //     'https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png',
+  //     new Date(),
+  //     10
+  //   ),
 
-    new FaceSnap(
-      2,
-      'Barnabé',
-      'Un bon gars !',
-      'https://cdn.pixabay.com/photo/2017/01/31/21/23/avatar-2027366_960_720.png',
-      new Date(),
-      200
-    ).withLocation('à Paris'),
+  //   new FaceSnap(
+  //     2,
+  //     'Barnabé',
+  //     'Un bon gars !',
+  //     'https://cdn.pixabay.com/photo/2017/01/31/21/23/avatar-2027366_960_720.png',
+  //     new Date(),
+  //     200
+  //   ).withLocation('à Paris'),
 
-    new FaceSnap(
-      3,
-      'Cunégonde',
-      'Sans commentaire...',
-      'https://cdn.pixabay.com/photo/2018/08/28/12/41/avatar-3637425_960_720.png',
-      new Date(),
-      1
-    ),
-  ];
+  //   new FaceSnap(
+  //     3,
+  //     'Cunégonde',
+  //     'Sans commentaire...',
+  //     'https://cdn.pixabay.com/photo/2018/08/28/12/41/avatar-3637425_960_720.png',
+  //     new Date(),
+  //     1
+  //   ),
+  // ];
 
-  // method to get the face snaps from the service class and return a shallow copy of the faceSnaps array using the spread operator (...)
-  getFaceSnaps(): FaceSnap[] {
-    return [...this.faceSnaps]; // shallow copy
+  // method to get the face snaps from the service class and return a shallow copy of the faceSnaps array using the spread operator (...) - hard-coded array
+  // getFaceSnaps(): FaceSnap[] {
+  //   return [...this.faceSnaps]; // shallow copy
+  // }
+
+  getFaceSnaps(): Observable<FaceSnap[]> {
+    return this.http.get<FaceSnap[]>('http://localhost:3000/facesnaps');
   }
 
-  getFaceSnapById(faceSnapId: number): FaceSnap {
-    const foundFaceSnap: FaceSnap | undefined = this.faceSnaps.find(
-      (faceSnap: FaceSnap) => faceSnap.id === faceSnapId
+  // getFaceSnapById(faceSnapId: number): FaceSnap {
+  //   const foundFaceSnap: FaceSnap | undefined = this.faceSnaps.find(
+  //     (faceSnap: FaceSnap) => faceSnap.id === faceSnapId
+  //   );
+  //   if (!foundFaceSnap) {
+  //     throw new Error(`FaceSnap with id ${faceSnapId} not found`);
+  //   }
+  //   return foundFaceSnap;
+  // }
+
+  getFaceSnapById(faceSnapId: number): Observable<FaceSnap> {
+    return this.http.get<FaceSnap>(
+      `http://localhost:3000/facesnaps/${faceSnapId}`
     );
-    if (!foundFaceSnap) {
-      throw new Error(`FaceSnap with id ${faceSnapId} not found`);
-    }
-    return foundFaceSnap;
   }
 
   snapFaceSnapById(faceSnapId: number, snapType: SnapType): void {
-    const faceSnap: FaceSnap = this.getFaceSnapById(faceSnapId);
-    faceSnap.snap(snapType);
+    // const faceSnap: FaceSnap = this.getFaceSnapById(faceSnapId);
+    // faceSnap.snap(snapType);
   }
 
   // addFaceSnap(formValue: {
