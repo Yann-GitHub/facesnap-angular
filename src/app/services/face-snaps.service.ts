@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { FaceSnap } from '../models/face-snap';
 import { SnapType } from '../models/snap-type.type';
 import { HttpClient } from '@angular/common/http'; // HttpClient is a service that allows Angular to make HTTP requests to a server
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 // The FaceSnapsService class is an Angular service that provides the FaceSnap objects to the components of the application.
 
@@ -13,9 +14,9 @@ import { Observable } from 'rxjs';
 export class FaceSnapsService {
   constructor(private http: HttpClient) {} // inject the HttpClient service into the FaceSnapsService class
 
-  private faceSnaps: FaceSnap[] = [];
+  // private faceSnaps: FaceSnap[] = [];
 
-  // hard-coded array of FaceSnap objects
+  // Mock data
   // private faceSnaps: FaceSnap[] = [
   //   new FaceSnap(
   //     1,
@@ -45,14 +46,12 @@ export class FaceSnapsService {
   //   ),
   // ];
 
-  // method to get the face snaps from the service class and return a shallow copy of the faceSnaps array using the spread operator (...) - hard-coded array
+  //////////////////////////: Used with mock data //////////////////////////
+
+  // method to get the FaceSnap objects from mock data
   // getFaceSnaps(): FaceSnap[] {
   //   return [...this.faceSnaps]; // shallow copy
   // }
-
-  getFaceSnaps(): Observable<FaceSnap[]> {
-    return this.http.get<FaceSnap[]>('http://localhost:3000/facesnaps');
-  }
 
   // getFaceSnapById(faceSnapId: number): FaceSnap {
   //   const foundFaceSnap: FaceSnap | undefined = this.faceSnaps.find(
@@ -64,15 +63,39 @@ export class FaceSnapsService {
   //   return foundFaceSnap;
   // }
 
+  // snapFaceSnapById(faceSnapId: number, snapType: SnapType): void {
+  //   const faceSnap: FaceSnap = this.getFaceSnapById(faceSnapId);
+  //   faceSnap.snap(snapType);
+  // }
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  getFaceSnaps(): Observable<FaceSnap[]> {
+    return this.http.get<FaceSnap[]>('http://localhost:3000/facesnaps');
+  }
+
   getFaceSnapById(faceSnapId: number): Observable<FaceSnap> {
     return this.http.get<FaceSnap>(
       `http://localhost:3000/facesnaps/${faceSnapId}`
     );
   }
 
-  snapFaceSnapById(faceSnapId: number, snapType: SnapType): void {
-    // const faceSnap: FaceSnap = this.getFaceSnapById(faceSnapId);
-    // faceSnap.snap(snapType);
+  snapFaceSnapById(
+    faceSnapId: number,
+    snapType: SnapType
+  ): Observable<FaceSnap> {
+    return this.getFaceSnapById(faceSnapId).pipe(
+      map((faceSnap) => ({
+        ...faceSnap,
+        snaps: snapType === 'snap' ? faceSnap.snaps + 1 : faceSnap.snaps - 1,
+      })),
+      switchMap((updatedFaceSnap) =>
+        this.http.put<FaceSnap>(
+          `http://localhost:3000/facesnaps/${faceSnapId}`,
+          updatedFaceSnap
+        )
+      )
+    );
   }
 
   // addFaceSnap(formValue: {
@@ -90,23 +113,23 @@ export class FaceSnapsService {
   //   this.faceSnaps.push(faceSnap);
   // }
 
-  addFaceSnap(formValue: {
-    title: string;
-    description: string;
-    imageUrl: string;
-    location?: string;
-  }): void {
-    const faceSnap: FaceSnap = new FaceSnap(
-      this.faceSnaps[this.faceSnaps.length - 1].id + 1,
-      formValue.title,
-      formValue.description,
-      formValue.imageUrl,
-      new Date(),
-      0
-    );
-    if (formValue.location) {
-      faceSnap.setLocation(formValue.location);
-    }
-    this.faceSnaps.push(faceSnap);
-  }
+  // addFaceSnap(formValue: {
+  //   title: string;
+  //   description: string;
+  //   imageUrl: string;
+  //   location?: string;
+  // }): void {
+  //   const faceSnap: FaceSnap = new FaceSnap(
+  //     this.faceSnaps[this.faceSnaps.length - 1].id + 1,
+  //     formValue.title,
+  //     formValue.description,
+  //     formValue.imageUrl,
+  //     new Date(),
+  //     0
+  //   );
+  //   if (formValue.location) {
+  //     faceSnap.setLocation(formValue.location);
+  //   }
+  //   this.faceSnaps.push(faceSnap);
+  // }
 }

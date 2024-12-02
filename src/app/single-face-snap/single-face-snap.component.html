@@ -23,7 +23,7 @@
   </p>
 
   <p>
-    <button (click)="onSnap()">{{ snapButtonText }}</button>
+    <button (click)="onSnap(faceSnap.id)">{{ snapButtonText }}</button>
     <!-- event binding pour appeler la méthode onSnap() -->
 
     <span [ngStyle]="{ color: 'rgb(0, ' + faceSnap.snaps + ', 0' }">

@@ -10,7 +10,7 @@ import {
 } from '@angular/common';
 import { FaceSnapsService } from '../services/face-snaps.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-single-face-snap',
@@ -45,13 +45,67 @@ export class SingleFaceSnapComponent implements OnInit {
     this.getFaceSnap();
   }
 
-  onSnap(): void {
-    // if (this.userHasSnapped) {
-    //   this.unsnap();
-    // } else {
-    //   this.snap();
-    // }
+  /////////////////////////////////// Used with data from the backend ///////////////////////////////////
+
+  ///// Combined requests /////
+  // onSnap(faceSnapId: number): void {
+  //   if (this.snapButtonText === 'Oh Snap!') {
+  //     this.FaceSnapsService.snapFaceSnapById(faceSnapId, 'snap')
+  //       .pipe(
+  //         // tap operator is used to perform side effects
+  //         tap(() => {
+  //           this.faceSnap$ = this.FaceSnapsService.getFaceSnapById(faceSnapId);
+  //           this.userHasSnapped = true;
+  //           this.snapButtonText = 'Unsnap';
+  //         })
+  //       )
+  //       .subscribe();
+  //   } else {
+  //     this.FaceSnapsService.snapFaceSnapById(faceSnapId, 'unsnap')
+  //       .pipe(
+  //         tap(() => {
+  //           this.faceSnap$ = this.FaceSnapsService.getFaceSnapById(faceSnapId);
+  //           this.userHasSnapped = false;
+  //           this.snapButtonText = 'Oh Snap!';
+  //         })
+  //       )
+  //       .subscribe();
+  //   }
+  // }
+
+  ///// Simplified requests without getting the faceSnap again /////
+  onSnap(faceSnapId: number): void {
+    if (this.snapButtonText === 'Oh Snap!') {
+      this.faceSnap$ = this.FaceSnapsService.snapFaceSnapById(
+        faceSnapId,
+        'snap'
+      ).pipe(
+        tap(() => {
+          this.userHasSnapped = true;
+          this.snapButtonText = 'Unsnap';
+        })
+      );
+    } else {
+      this.faceSnap$ = this.FaceSnapsService.snapFaceSnapById(
+        faceSnapId,
+        'unsnap'
+      ).pipe(
+        tap(() => {
+          this.userHasSnapped = false;
+          this.snapButtonText = 'Oh Snap!';
+        })
+      );
+    }
   }
+
+  /////////////////////////////////// Used with static data ///////////////////////////////////
+  // onSnap(): void {
+  //   if (this.userHasSnapped) {
+  //     this.unsnap();
+  //   } else {
+  //     this.snap();
+  //   }
+  // }
 
   // snap(): void {
   //   this.FaceSnapsService.snapFaceSnapById(this.faceSnap.id, 'snap');
@@ -64,6 +118,7 @@ export class SingleFaceSnapComponent implements OnInit {
   //   this.userHasSnapped = false;
   //   this.snapButtonText = 'Oh Snap!';
   // }
+  //////////////////////////////////////////////////////////////////////////////////////////////
 
   private getFaceSnap() {
     const faceSnapId = Number(this.route.snapshot.params['id']);
