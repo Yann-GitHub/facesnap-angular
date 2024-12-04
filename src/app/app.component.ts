@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './core/components/header/header.component';
 import { RouterOutlet } from '@angular/router';
 import { filter, interval, map, Observable, tap } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+// import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [HeaderComponent, RouterOutlet, AsyncPipe], // AsyncPipe is used to subscribe to the observable and display the value in the template
+  imports: [HeaderComponent, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

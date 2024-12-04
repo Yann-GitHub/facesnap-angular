@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { httpInterceptorProviders } from './interceptors';
+import { httpInterceptorProviders } from './core/interceptors';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
