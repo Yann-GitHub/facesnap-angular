@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  // Injection of the AuthService
+  // Injection of the AuthService without using the constructor
   const authService = inject(AuthService);
 
   // Retrieval of the token
@@ -31,7 +31,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(authReq);
 };
 
-//// Old version of the auth.interceptor.ts file ////
+///////////////////////// Old version of the auth.interceptor.ts file /////////////////////
 // import { Injectable } from '@angular/core';
 // import {
 //   HttpEvent,

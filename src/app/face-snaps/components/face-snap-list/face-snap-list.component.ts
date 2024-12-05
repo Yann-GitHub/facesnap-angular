@@ -19,7 +19,7 @@ export class FaceSnapListComponent implements OnInit, OnDestroy {
 
   private destroy$!: Subject<boolean>;
 
-  // Le constructeur injecte le service FaceSnapsService
+  // constructor injects dependency FaceSnapsService
   constructor(private faceSnapsService: FaceSnapsService) {}
 
   ngOnInit(): void {

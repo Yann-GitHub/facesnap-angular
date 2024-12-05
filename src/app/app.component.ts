@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from './core/components/header/header.component';
 import { RouterOutlet } from '@angular/router';
 import { filter, interval, map, Observable, tap } from 'rxjs';
-// import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +14,7 @@ export class AppComponent implements OnInit {
   interval$!: Observable<string>;
 
   ngOnInit(): void {
+    //////////// Testing the interval observable ////////////
     // variable for observable use the $ suffix to indicate that it is an observable !!
     // this.interval$ = interval(1000).pipe(
     //   filter((value) => value % 3 === 0),
